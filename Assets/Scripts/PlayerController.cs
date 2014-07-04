@@ -81,6 +81,15 @@ public class PlayerController : MonoBehaviour {
 				}while(weapon==null);
 			}
 		}
+
+		if (Input.GetMouseButton (0))
+		{
+			if(activeWeapon>=0){
+				weapon = weaponList[activeWeapon];
+				weapon.Shoot();
+			}
+
+		}
 	}
 
 

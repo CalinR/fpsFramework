@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProductVersion>10.0.20506</ProductVersion>
+	<SchemaVersion>2.0</SchemaVersion>
+	<ProjectGuid>{FA8DBABC-E0CA-799E-4E05-8F2A702C11A7}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace></RootNamespace>
+	<AssemblyName>Assembly-CSharp-Editor-firstpass</AssemblyName>
+	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
+	<BaseDirectory>Assets</BaseDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>Temp\bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE;UNITY_4_5_0;UNITY_4_5;UNITY_WEBPLAYER;WEBPLUG;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_OSX</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>Temp\bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+	<Reference Include="System" />
+    <Reference Include="System.XML" />
+	<Reference Include="System.Core" />
+	<Reference Include="System.Xml.Linq" />
+	<Reference Include="UnityEngine">
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEditor">
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
+	</Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\Plugins\Editor\Decal System\Scripts\Decals\DS_DecalProjectorEditor.cs" />
+     <Compile Include="Assets\Plugins\Editor\Decal System\Scripts\Decals\DS_DecalProjectorGroupEditor.cs" />
+     <Compile Include="Assets\Plugins\Editor\Decal System\Scripts\Decals\DS_DecalsEditor.cs" />
+     <Compile Include="Assets\Plugins\Editor\Decal System\Scripts\SkinnedDecals\DS_SkinnedDecalProjectorEditor.cs" />
+     <Compile Include="Assets\Plugins\Editor\Decal System\Scripts\SkinnedDecals\DS_SkinnedDecalProjectorGroupEditor.cs" />
+     <Compile Include="Assets\Plugins\Editor\Decal System\Scripts\SkinnedDecals\DS_SkinnedDecalsEditor.cs" />
+     <Compile Include="Assets\Plugins\Editor\Decal System\Scripts\Support\DecalsGizmos.cs" />
+     <Compile Include="Assets\Plugins\Editor\Decal System\Scripts\Support\DecalsMenu.cs" />
+     <Compile Include="Assets\Plugins\Editor\Decal System\Scripts\Window\DS_UVRectangleEditorWindow.cs" />
+     <None Include="Assets\Plugins\Decal System\Shader\Decal-Alpha-Diffuse.shader" />
+     <None Include="Assets\Plugins\Decal System\DecalSystem.Runtime.xml" />
+     <None Include="Assets\Plugins\Decal System\Shader\Decal-Alpha-VertexLit.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Mobile-Decal-AlphaTest-Bumped.shader" />
+     <None Include="Assets\Plugins\Decal System\Readme.txt" />
+     <None Include="Assets\Plugins\Decal System\Shader\Colored\Experimental Shadow Receiver\Decal-Alpha-Parallax-Diffuse-Colored-Receive-Shadow.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Colored\Mobile-Decal-Alpha-TargetBumped-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Decal-AlphaTest-VertexLit.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Decal-AlphaTest-Diffuse.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Mobile-Decal-Alpha-Diffuse.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Colored\Decal-Alpha-Diffuse-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Colored\Experimental Shadow Receiver\Decal-Alpha-Bumped-Colored-Receive-Shadow.shader" />
+     <None Include="Assets\Plugins\Decal System\Release Notes.txt" />
+     <None Include="Assets\Plugins\Decal System\Shader\Colored\Experimental Shadow Receiver\Decal-Alpha-Diffuse-Colored-Receive-Shadow.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Colored\Decal-AlphaTest-Bumped-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Decal-Alpha-TargetBumped.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Colored\Experimental Shadow Receiver\Decal-Alpha-TargetBumped-Colored-Receive-Shadow.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Decal-AlphaTest-Bumped.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Colored\Decal-Alpha-TargetBumped-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Colored\Mobile-Decal-AlphaTest-Diffuse-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Colored\Mobile-Decal-AlphaTest-TargetBumped-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Colored\Mobile-Decal-Alpha-Diffuse-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Colored\Decal-Alpha-Bumped-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Colored\Decal-AlphaTest-TargetBumped-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Mobile-Decal-Alpha-Bumped.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Colored\Decal-Alpha-Parallax-Diffuse-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Mobile-Decal-AlphaTest-TargetBumped.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Decal-Alpha-Bumped.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Decal-AlphaTest-TargetBumped.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Colored\Decal-AlphaTest-Diffuse-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Mobile-Decal-AlphaTest-Diffuse.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Colored\Mobile-Decal-Alpha-Bumped-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Colored\Mobile-Decal-AlphaTest-Bumped-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Mobile-Decal-Alpha-TargetBumped.shader" />
+ <Reference Include="DecalSystem.Runtime">
+ <HintPath>/Users/calinreimer/Documents/Unity/fpsFramework/Assets/Plugins/Decal System/DecalSystem.Runtime.dll</HintPath>
+ </Reference>
+ <Reference Include="DecalSystem.Editor">
+ <HintPath>/Users/calinreimer/Documents/Unity/fpsFramework/Assets/Plugins/Editor/Decal System/DecalSystem.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Graphs">
+ <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.Graphs.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{1A4854DD-CBF1-BD11-44A3-551A3456F0E3}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+    <ProjectReference Include="Assembly-UnityScript-firstpass.unityproj">
+      <Project>{71D96C08-092F-A9FD-2E7F-54F1A0982738}</Project>      <Name>Assembly-UnityScript-firstpass</Name>    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	   Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  
+</Project>

@@ -46,12 +46,50 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\BulletDecals.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Tags.cs" />
      <Compile Include="Assets\Scripts\Weapon.cs" />
+     <None Include="Assets\Plugins\Decal System\Shader\Decal-Alpha-Diffuse.shader" />
+     <None Include="Assets\Plugins\Decal System\DecalSystem.Runtime.xml" />
+     <None Include="Assets\Plugins\Decal System\Shader\Decal-Alpha-VertexLit.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Mobile-Decal-AlphaTest-Bumped.shader" />
+     <None Include="Assets\Plugins\Decal System\Readme.txt" />
+     <None Include="Assets\Plugins\Decal System\Shader\Colored\Experimental Shadow Receiver\Decal-Alpha-Parallax-Diffuse-Colored-Receive-Shadow.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Colored\Mobile-Decal-Alpha-TargetBumped-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Decal-AlphaTest-VertexLit.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Decal-AlphaTest-Diffuse.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Mobile-Decal-Alpha-Diffuse.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Colored\Decal-Alpha-Diffuse-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Colored\Experimental Shadow Receiver\Decal-Alpha-Bumped-Colored-Receive-Shadow.shader" />
+     <None Include="Assets\Plugins\Decal System\Release Notes.txt" />
+     <None Include="Assets\Plugins\Decal System\Shader\Colored\Experimental Shadow Receiver\Decal-Alpha-Diffuse-Colored-Receive-Shadow.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Colored\Decal-AlphaTest-Bumped-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Decal-Alpha-TargetBumped.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Colored\Experimental Shadow Receiver\Decal-Alpha-TargetBumped-Colored-Receive-Shadow.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Decal-AlphaTest-Bumped.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Colored\Decal-Alpha-TargetBumped-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Colored\Mobile-Decal-AlphaTest-Diffuse-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Colored\Mobile-Decal-AlphaTest-TargetBumped-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Colored\Mobile-Decal-Alpha-Diffuse-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Colored\Decal-Alpha-Bumped-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Colored\Decal-AlphaTest-TargetBumped-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Mobile-Decal-Alpha-Bumped.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Colored\Decal-Alpha-Parallax-Diffuse-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Mobile-Decal-AlphaTest-TargetBumped.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Decal-Alpha-Bumped.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Decal-AlphaTest-TargetBumped.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Colored\Decal-AlphaTest-Diffuse-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Mobile-Decal-AlphaTest-Diffuse.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Colored\Mobile-Decal-Alpha-Bumped-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Colored\Mobile-Decal-AlphaTest-Bumped-Colored.shader" />
+     <None Include="Assets\Plugins\Decal System\Shader\Mobile\Mobile-Decal-Alpha-TargetBumped.shader" />
  <Reference Include="Assembly-UnityScript-firstpass">
  <HintPath>/Users/calinreimer/Documents/Unity/fpsFramework/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
+ </Reference>
+ <Reference Include="DecalSystem.Runtime">
+ <HintPath>/Users/calinreimer/Documents/Unity/fpsFramework/Assets/Plugins/Decal System/DecalSystem.Runtime.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

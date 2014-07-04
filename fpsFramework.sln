@@ -5,6 +5,8 @@ Project("{E3D24A87-9C93-A65F-5B0E-ECF02F70A143}") = "fpsFramework", "Assembly-CS
 EndProject
 Project("{E3D24A87-9C93-A65F-5B0E-ECF02F70A143}") = "fpsFramework", "Assembly-CSharp.csproj", "{91CFE44D-DB71-D784-6A24-C2A1D944D4A7}"
 EndProject
+Project("{E3D24A87-9C93-A65F-5B0E-ECF02F70A143}") = "fpsFramework", "Assembly-CSharp-Editor-firstpass.csproj", "{FA8DBABC-E0CA-799E-4E05-8F2A702C11A7}"
+EndProject
 Project("{E3D24A87-9C93-A65F-5B0E-ECF02F70A143}") = "fpsFramework", "Assembly-UnityScript-firstpass.unityproj", "{71D96C08-092F-A9FD-2E7F-54F1A0982738}"
 EndProject
 Global
@@ -21,6 +23,10 @@ Global
 		{91CFE44D-DB71-D784-6A24-C2A1D944D4A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91CFE44D-DB71-D784-6A24-C2A1D944D4A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91CFE44D-DB71-D784-6A24-C2A1D944D4A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA8DBABC-E0CA-799E-4E05-8F2A702C11A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA8DBABC-E0CA-799E-4E05-8F2A702C11A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA8DBABC-E0CA-799E-4E05-8F2A702C11A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA8DBABC-E0CA-799E-4E05-8F2A702C11A7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{71D96C08-092F-A9FD-2E7F-54F1A0982738}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{71D96C08-092F-A9FD-2E7F-54F1A0982738}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71D96C08-092F-A9FD-2E7F-54F1A0982738}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -29,7 +35,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-												GlobalSection(MonoDevelopProperties) = preSolution
+																																									GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
