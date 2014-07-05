@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DamageData : MonoBehaviour {
+public class DamageData {
 
 	public float damageAmount;
 	public RaycastHit damagePosition;
