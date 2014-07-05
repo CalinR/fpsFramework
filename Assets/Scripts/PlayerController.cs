@@ -116,6 +116,7 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 	}
+	
 
 	Weapon ActiveWeaponByIndex(int index)
 	{

@@ -58,7 +58,6 @@ namespace Edelweiss.DecalSystem.Example {
 			
 				// Instantiate the prefab and get its decals instance.
 			m_DecalsInstance = Instantiate (m_DecalsPrefab) as DS_Decals;
-			
 			if (m_DecalsInstance == null) {
 				Debug.LogError ("The decals prefab does not contain a DS_Decals instance!");
 			} else {
@@ -71,95 +70,67 @@ namespace Edelweiss.DecalSystem.Example {
 			}
 		}
 
+		public void GetCollisionType(string tag){
+			switch (tag) {
+				case "Wood":
+					m_UVRectangleIndex = 18;
+					break;
+				case "Metal":
+					m_UVRectangleIndex = 11;
+					break;
+				default:
+					m_UVRectangleIndex = 1;
+					break;
+			}
+			Debug.Log (tag);
+		}
 
-		public void CreateDecal(Transform transform) {
+
+		public void CreateDecal(Transform transform, float damage) {
 			RaycastHit l_RaycastHit;
 			Vector3 l_Ray = transform.TransformDirection(Vector3.forward);
 			if (Physics.Raycast (transform.position, l_Ray, out l_RaycastHit, Mathf.Infinity)) {
 
-				// Collider hit.
-				
-				// Make sure there are not too many projectors.
-				if (m_DecalProjectors.Count >= m_MaximumNumberOfProjectors) {
-					
-					// If there are more than the maximum number of projectors, we delete
-					// the oldest one.
-					DecalProjector l_DecalProjector = m_DecalProjectors [0];
-					m_DecalProjectors.RemoveAt (0);
-					m_DecalsMesh.RemoveProjector (l_DecalProjector);
-				}
-				
-				// Calculate the position and rotation for the new decal projector.
-				Vector3 l_ProjectorPosition = l_RaycastHit.point - (m_DecalProjectorOffset * l_Ray);
-				Quaternion l_ProjectorRotation = ProjectorRotationUtility.ProjectorRotation (- l_RaycastHit.normal, Vector3.up);
-				
-				// Randomize the rotation.
-				Quaternion l_RandomRotation = Quaternion.Euler (0.0f, Random.Range (0.0f, 360.0f), 0.0f);
-				l_ProjectorRotation = l_ProjectorRotation * l_RandomRotation;
-				
-				TerrainCollider l_TerrainCollider = l_RaycastHit.collider as TerrainCollider;
-				if (l_TerrainCollider != null) {
-					
-					// Terrain collider hit.
-					
-					Terrain l_Terrain = l_TerrainCollider.GetComponent <Terrain> ();
-					if (l_Terrain != null) {
+				GetCollisionType(l_RaycastHit.transform.tag);
+
+				DamageData damageData = new DamageData();
+				damageData.damageAmount = damage;
+				damageData.damagePosition = l_RaycastHit;
+
+
+				// Collider hit
+				l_RaycastHit.transform.SendMessage("ApplyDamage", damageData, SendMessageOptions.DontRequireReceiver);
+				if(l_RaycastHit.transform.tag != "Ammo"){
+
+
+
+					// Make sure there are not too many projectors.
+					if (m_DecalProjectors.Count >= m_MaximumNumberOfProjectors) {
 						
-						// Create the decal projector with all the required information.
-						DecalProjector l_DecalProjector = new DecalProjector (l_ProjectorPosition, l_ProjectorRotation, m_DecalProjectorScale, m_CullingAngle, m_MeshOffset, m_UVRectangleIndex, m_UVRectangleIndex);
-						
-						// Add the projector to our list and the decals mesh, such that both are
-						// synchronized. All the mesh data that is now added to the decals mesh
-						// will belong to this projector.
-						m_DecalProjectors.Add (l_DecalProjector);
-						m_DecalsMesh.AddProjector (l_DecalProjector);
-						
-						// The terrain data has to be converted to the decals instance's space.
-						Matrix4x4 l_TerrainToDecalsMatrix = m_WorldToDecalsMatrix * Matrix4x4.TRS (l_Terrain.transform.position, Quaternion.identity, Vector3.one);
-						
-						// Pass the terrain data with the corresponding conversion to the decals mesh.
-						m_DecalsMesh.Add (l_Terrain, l_TerrainToDecalsMatrix);
-						
-						// Cut and offset the decals mesh.
-						m_DecalsMeshCutter.CutDecalsPlanes (m_DecalsMesh);
-						m_DecalsMesh.OffsetActiveProjectorVertices ();
-						
-						// The changes are only present in the decals mesh at the moment. We have
-						// to pass them to the decals instance to visualize them.
-						m_DecalsInstance.UpdateDecalsMeshes (m_DecalsMesh);
-						
-						// For the next hit, use a new uv rectangle. Usually, you would select the uv rectangle
-						// based on the surface you have hit.
-						NextUVRectangleIndex ();
-					} else {
-						Debug.LogError ("Terrain is null!");
+						// If there are more than the maximum number of projectors, we delete
+						// the oldest one.
+						DecalProjector l_DecalProjector = m_DecalProjectors [0];
+						m_DecalProjectors.RemoveAt (0);
+						m_DecalsMesh.RemoveProjector (l_DecalProjector);
 					}
 					
-				} else {
+					// Calculate the position and rotation for the new decal projector.
+					Vector3 l_ProjectorPosition = l_RaycastHit.point - (m_DecalProjectorOffset * l_Ray);
+					Quaternion l_ProjectorRotation = ProjectorRotationUtility.ProjectorRotation (- l_RaycastHit.normal, Vector3.up);
 					
-					// We hit a collider. Next we have to find the mesh that belongs to the collider.
-					// That step depends on how you set up your mesh filters and collider relative to
-					// each other in the game objects. It is important to have a consistent way in order
-					// to have a simpler implementation.
+					// Randomize the rotation.
+					Quaternion l_RandomRotation = Quaternion.Euler (0.0f, Random.Range (0.0f, 360.0f), 0.0f);
+					l_ProjectorRotation = l_ProjectorRotation * l_RandomRotation;
 					
-					MeshCollider l_MeshCollider = l_RaycastHit.collider.GetComponent <MeshCollider> ();
-					MeshFilter l_MeshFilter = l_RaycastHit.collider.GetComponent <MeshFilter> ();
-					
-					if (l_MeshCollider != null || l_MeshFilter != null) {
-						Mesh l_Mesh = null;
-						if (l_MeshCollider != null) {
-							
-							// Mesh collider was hit. Just use the mesh data from that one.
-							l_Mesh = l_MeshCollider.sharedMesh;
-						} else if (l_MeshFilter != null) {
-							
-							// Otherwise take the data from the shared mesh.
-							l_Mesh = l_MeshFilter.sharedMesh;
-						}
+					TerrainCollider l_TerrainCollider = l_RaycastHit.collider as TerrainCollider;
+					if (l_TerrainCollider != null) {
 						
-						if (l_Mesh != null) {
+						// Terrain collider hit.
+						
+						Terrain l_Terrain = l_TerrainCollider.GetComponent <Terrain> ();
+						if (l_Terrain != null) {
 							
-							// Create the decal projector.
+							// Create the decal projector with all the required information.
 							DecalProjector l_DecalProjector = new DecalProjector (l_ProjectorPosition, l_ProjectorRotation, m_DecalProjectorScale, m_CullingAngle, m_MeshOffset, m_UVRectangleIndex, m_UVRectangleIndex);
 							
 							// Add the projector to our list and the decals mesh, such that both are
@@ -168,12 +139,13 @@ namespace Edelweiss.DecalSystem.Example {
 							m_DecalProjectors.Add (l_DecalProjector);
 							m_DecalsMesh.AddProjector (l_DecalProjector);
 							
-							// Get the required matrices.
-							Matrix4x4 l_WorldToMeshMatrix = l_RaycastHit.collider.renderer.transform.worldToLocalMatrix;
-							Matrix4x4 l_MeshToWorldMatrix = l_RaycastHit.collider.renderer.transform.localToWorldMatrix;
+							// The terrain data has to be converted to the decals instance's space.
+							Matrix4x4 l_TerrainToDecalsMatrix = m_WorldToDecalsMatrix * Matrix4x4.TRS (l_Terrain.transform.position, Quaternion.identity, Vector3.one);
 							
-							// Add the mesh data to the decals mesh, cut and offset it.
-							m_DecalsMesh.Add (l_Mesh, l_WorldToMeshMatrix, l_MeshToWorldMatrix);						
+							// Pass the terrain data with the corresponding conversion to the decals mesh.
+							m_DecalsMesh.Add (l_Terrain, l_TerrainToDecalsMatrix);
+							
+							// Cut and offset the decals mesh.
 							m_DecalsMeshCutter.CutDecalsPlanes (m_DecalsMesh);
 							m_DecalsMesh.OffsetActiveProjectorVertices ();
 							
@@ -183,7 +155,61 @@ namespace Edelweiss.DecalSystem.Example {
 							
 							// For the next hit, use a new uv rectangle. Usually, you would select the uv rectangle
 							// based on the surface you have hit.
-							NextUVRectangleIndex ();
+							//NextUVRectangleIndex ();
+						} else {
+							Debug.LogError ("Terrain is null!");
+						}
+						
+					} else {
+						
+						// We hit a collider. Next we have to find the mesh that belongs to the collider.
+						// That step depends on how you set up your mesh filters and collider relative to
+						// each other in the game objects. It is important to have a consistent way in order
+						// to have a simpler implementation.
+						
+						MeshCollider l_MeshCollider = l_RaycastHit.collider.GetComponent <MeshCollider> ();
+						MeshFilter l_MeshFilter = l_RaycastHit.collider.GetComponent <MeshFilter> ();
+						
+						if (l_MeshCollider != null || l_MeshFilter != null) {
+							Mesh l_Mesh = null;
+							if (l_MeshCollider != null) {
+								
+								// Mesh collider was hit. Just use the mesh data from that one.
+								l_Mesh = l_MeshCollider.sharedMesh;
+							} else if (l_MeshFilter != null) {
+								
+								// Otherwise take the data from the shared mesh.
+								l_Mesh = l_MeshFilter.sharedMesh;
+							}
+							
+							if (l_Mesh != null) {
+								
+								// Create the decal projector.
+								DecalProjector l_DecalProjector = new DecalProjector (l_ProjectorPosition, l_ProjectorRotation, m_DecalProjectorScale, m_CullingAngle, m_MeshOffset, m_UVRectangleIndex, m_UVRectangleIndex);
+								
+								// Add the projector to our list and the decals mesh, such that both are
+								// synchronized. All the mesh data that is now added to the decals mesh
+								// will belong to this projector.
+								m_DecalProjectors.Add (l_DecalProjector);
+								m_DecalsMesh.AddProjector (l_DecalProjector);
+								
+								// Get the required matrices.
+								Matrix4x4 l_WorldToMeshMatrix = l_RaycastHit.collider.renderer.transform.worldToLocalMatrix;
+								Matrix4x4 l_MeshToWorldMatrix = l_RaycastHit.collider.renderer.transform.localToWorldMatrix;
+								
+								// Add the mesh data to the decals mesh, cut and offset it.
+								m_DecalsMesh.Add (l_Mesh, l_WorldToMeshMatrix, l_MeshToWorldMatrix);						
+								m_DecalsMeshCutter.CutDecalsPlanes (m_DecalsMesh);
+								m_DecalsMesh.OffsetActiveProjectorVertices ();
+								
+								// The changes are only present in the decals mesh at the moment. We have
+								// to pass them to the decals instance to visualize them.
+								m_DecalsInstance.UpdateDecalsMeshes (m_DecalsMesh);
+								
+								// For the next hit, use a new uv rectangle. Usually, you would select the uv rectangle
+								// based on the surface you have hit.
+								//NextUVRectangleIndex ();
+							}
 						}
 					}
 				}
