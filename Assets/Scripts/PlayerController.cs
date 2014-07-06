@@ -107,6 +107,10 @@ public class PlayerController : MonoBehaviour {
 					lastWalkSound=0;
 				}
 			}
+			BroadcastMessage("PlayerMoving", SendMessageOptions.DontRequireReceiver);
+		}
+		else {
+			BroadcastMessage("PlayerIdle", SendMessageOptions.DontRequireReceiver);
 		}
 	}
 
@@ -142,7 +146,9 @@ public class PlayerController : MonoBehaviour {
 		if (weaponList[index].HasWeapon) 
 		{
 			if(activeWeapon>=0){
-				weaponList[activeWeapon].gameObject.SetActive(false);
+				if(activeWeapon!=index){
+					weaponList[activeWeapon].gameObject.SetActive(false);
+				}
 			}
 			activeWeapon = index;
 			weaponList[index].gameObject.SetActive(true);

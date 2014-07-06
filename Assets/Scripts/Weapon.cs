@@ -20,14 +20,26 @@ public class Weapon : MonoBehaviour {
 	List<GameObject> shells = new List<GameObject>();
 	public float damage = 10;
 	public AudioClip gunShot;
+	public AnimationClip idle;
+	public AnimationClip walking;
+	private int playerMovement = 0;
+
+
 
 	void Awake(){
 		bulletDecals = FindObjectOfType<Edelweiss.DecalSystem.Example.BulletDecals> ();
+		if (idle) {
+			Animation anim = gameObject.AddComponent<Animation> ();
+			anim.AddClip (idle, idle.name);
+			anim.AddClip (walking, walking.name);
+			animation.Play (idle.name);
+		}
 	}
 
 	void Start(){
 		muzzleFlash.SetActive (false);
 	}
+	
 
 	void Update(){
 		muzzleTimeSince = Time.time-muzzleLastShot;
@@ -35,6 +47,19 @@ public class Weapon : MonoBehaviour {
 			muzzleFlash.SetActive (false);
 		}
 	}
+
+	void PlayerMoving(){
+		if (idle) {
+			animation.CrossFade (walking.name);
+		}
+	}
+
+	void PlayerIdle(){
+		if (idle) {
+			animation.CrossFade (idle.name);
+		}
+	}
+
 
 	public bool HasWeapon {
 		get 
