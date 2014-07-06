@@ -30,6 +30,17 @@ public class PlayerController : MonoBehaviour {
 
 	}
 
+	void OnGUI ( )
+	{
+		GUIStyle ammoGuiStyle = new GUIStyle();
+		ammoGuiStyle.fontSize = 14;
+
+		if (activeWeapon >= 0) {
+			GUI.Label (new Rect (Screen.width - 60f, Screen.height - 30f, 30f, 20f), weaponList [activeWeapon].clipBullets.ToString (), ammoGuiStyle);
+			GUI.Label (new Rect (Screen.width - 30f, Screen.height - 30f, 30f, 20f), weaponList [activeWeapon].ammo.ToString (), ammoGuiStyle);
+		}
+	}
+	
 	void Update()
 	{
 		Weapon weapon;
@@ -84,6 +95,13 @@ public class PlayerController : MonoBehaviour {
 					weapon = ActiveWeaponByIndex(weaponIndex);
 					
 				}while(weapon==null);
+			}
+		}
+
+		if (Input.GetKeyDown (KeyCode.R)) {
+			if(activeWeapon>=0){
+				weapon = weaponList[activeWeapon];
+				weapon.Reload();
 			}
 		}
 

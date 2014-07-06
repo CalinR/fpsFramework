@@ -23,7 +23,7 @@ public class ExplosiveObject : MonoBehaviour {
 	private void Explode(){
 		renderer.material = explodedMaterial;
 		Instantiate(explosion, transform.position, transform.rotation);
-		transform.rigidbody.AddExplosionForce(1, transform.position, 5, 0, ForceMode.Impulse);
+		transform.rigidbody.AddExplosionForce(2, transform.position, 5, 0, ForceMode.Impulse);
 		audio.PlayOneShot (explosionSound);
 	}
 }
