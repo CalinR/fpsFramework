@@ -82,7 +82,6 @@ namespace Edelweiss.DecalSystem.Example {
 					m_UVRectangleIndex = 1;
 					break;
 			}
-			Debug.Log (tag);
 		}
 
 

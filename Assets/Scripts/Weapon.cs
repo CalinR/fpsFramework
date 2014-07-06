@@ -19,6 +19,7 @@ public class Weapon : MonoBehaviour {
 	private int maxShellCount = 10;
 	List<GameObject> shells = new List<GameObject>();
 	public float damage = 10;
+	public AudioClip gunShot;
 
 	void Awake(){
 		bulletDecals = FindObjectOfType<Edelweiss.DecalSystem.Example.BulletDecals> ();
@@ -53,6 +54,7 @@ public class Weapon : MonoBehaviour {
 		}
 		if (Time.time >= lastShot+fireRate)
 		{
+			AudioSource.PlayClipAtPoint(gunShot,transform.position);
 			muzzleLastShot = Time.time;
 			lastShot = Time.time;
 			bulletDecals.CreateDecal (transform, damage);

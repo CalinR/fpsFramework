@@ -8,10 +8,15 @@ public class PlayerController : MonoBehaviour {
 
 	private int numOfWeaponsInInventory = 0;
 	public Weapon[] weaponList;
-	
+
+	public AudioClip[] walking;
+	private CharacterController controller;
+	private float lastWalk = 0;
+	private int lastWalkSound = 0;
 
 	void Awake()
 	{
+		controller = GetComponent<CharacterController>();
 		Weapon weapon;
 		for(int i=0; i<weaponList.Length;i++)
 		{
@@ -90,12 +95,26 @@ public class PlayerController : MonoBehaviour {
 			}
 
 		}
+
+
+		//PLAY WALKING SOUNDS
+		if(controller.isGrounded && controller.velocity.magnitude > 0.3){
+			if (Time.time >= lastWalk+0.6){
+				lastWalk=Time.time;
+				AudioSource.PlayClipAtPoint(walking[lastWalkSound], new Vector3(transform.position.x, transform.position.y-1, transform.position.z));
+				lastWalkSound++;
+				if(lastWalkSound>walking.Length-1){
+					lastWalkSound=0;
+				}
+			}
+		}
 	}
 
 
 
 	void OnTriggerEnter(Collider other) {
 		if(other.gameObject.tag == "Pickup"){
+			other.gameObject.SendMessage("Pickup");
 			string weaponId = other.gameObject.name;
 			Weapon weapon;
 			for(int i = 0; i<weaponList.Length; i++)
