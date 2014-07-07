@@ -24,10 +24,13 @@ public class Weapon : MonoBehaviour {
 	public AudioClip reload;
 	public AnimationClip idle;
 	public AnimationClip walking;
+	public AnimationClip reloading;
 	private int playerMovement = 0;
 	public int clipSize = 6;
 	public int ammo = 100;
 	public int clipBullets;
+	private bool isReloading = false;
+	private float reloadStartTime = 0f;
 
 
 
@@ -37,6 +40,7 @@ public class Weapon : MonoBehaviour {
 			Animation anim = gameObject.AddComponent<Animation> ();
 			anim.AddClip (idle, idle.name);
 			anim.AddClip (walking, walking.name);
+			anim.AddClip (reloading, reloading.name);
 			animation.Play (idle.name);
 		}
 	}
@@ -54,22 +58,34 @@ public class Weapon : MonoBehaviour {
 		if (muzzleTimeSince >= muzzleShowTime) {
 			muzzleFlash.SetActive (false);
 		}
+
+
+		/*FIX THIS, THIS SHOULD BE HANDLED IN A FUNCTION THAT CONTROLS ALL ANIMATIONS FOR THIS WEAPON*/
+		if (isReloading) {
+			float reloadLength = animation[reloading.name].length;
+			animation.CrossFade (reloading.name);
+			if(Time.time >= reloadStartTime+reloadLength){
+				isReloading = false;
+			}
+		}
 	}
 
 	void PlayerMoving(){
-		if (idle) {
+		if (idle && !isReloading) {
 			animation.CrossFade (walking.name);
 		}
 	}
 
 	void PlayerIdle(){
-		if (idle) {
+		if (idle && !isReloading) {
 			animation.CrossFade (idle.name);
 		}
 	}
 
 	public void Reload() {
-		if (ammo > 0) {
+		if (ammo > 0 && clipBullets != clipSize) {
+			isReloading = true;
+			reloadStartTime = Time.time;
 			AudioSource.PlayClipAtPoint(reload,transform.position);
 			int bulletsMissing = clipSize-clipBullets;
 			if(ammo<bulletsMissing){
@@ -97,7 +113,7 @@ public class Weapon : MonoBehaviour {
 			Destroy(shells[0]);
 			shells.RemoveAt(0);
 		}
-		if (Time.time >= lastShot+fireRate)
+		if (Time.time >= lastShot+fireRate && !isReloading)
 		{
 			lastShot = Time.time;
 			if(clipBullets>0){

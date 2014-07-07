@@ -157,7 +157,30 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 	}
-	
+
+	void OnControllerColliderHit(ControllerColliderHit hit) {
+		if(hit.gameObject.tag == "Ammo"){
+			Ammo ammoScript = hit.gameObject.GetComponent<Ammo>();
+			if(ammoScript.ammoEnabled){
+				int collectedAmmo = ammoScript.ammunition;
+				string pickedUpId = ammoScript.WeaponId;
+				ammoScript.Pickup();
+				updateAmmo(collectedAmmo,pickedUpId);
+			}
+		}
+	}
+
+	void updateAmmo(int collectedAmmo, string id){
+		Weapon weapon;
+		for(int i = 0; i<weaponList.Length; i++)
+		{
+			weapon = weaponList[i];
+			if((weapon.id) == id)
+			{
+				weapon.ammo += collectedAmmo;
+			}
+		}
+	}
 
 	Weapon ActiveWeaponByIndex(int index)
 	{
