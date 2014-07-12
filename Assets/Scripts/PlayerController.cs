@@ -58,6 +58,10 @@ public class PlayerController : MonoBehaviour {
 			ActiveWeaponByIndex(2);
 		}
 
+		if (Input.GetKeyDown (KeyCode.Alpha4)) {
+			ActiveWeaponByIndex(3);
+		}
+
 		//GOTO NEXT WEAPON IN WEAPON LIST
 		if (Input.GetKeyDown (KeyCode.E)) 
 		{

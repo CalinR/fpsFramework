@@ -25,17 +25,20 @@ public class Weapon : MonoBehaviour {
 	public AnimationClip idle;
 	public AnimationClip walking;
 	public AnimationClip reloading;
-	private int playerMovement = 0;
 	public int clipSize = 6;
 	public int ammo = 100;
 	public int clipBullets;
 	private bool isReloading = false;
 	private float reloadStartTime = 0f;
+	public bool isExplosive = false;
+	public GameObject explosiveProjectile;
 
 
 
 	void Awake(){
-		bulletDecals = FindObjectOfType<Edelweiss.DecalSystem.Example.BulletDecals> ();
+		if (!isExplosive) {
+			bulletDecals = FindObjectOfType<Edelweiss.DecalSystem.Example.BulletDecals> ();
+		}
 		if (idle) {
 			Animation anim = gameObject.AddComponent<Animation> ();
 			anim.AddClip (idle, idle.name);
@@ -110,24 +113,33 @@ public class Weapon : MonoBehaviour {
 
 	public void Shoot() {
 		while (shells.Count >= maxShellCount) {
-			Destroy(shells[0]);
-			shells.RemoveAt(0);
+			Destroy (shells [0]);
+			shells.RemoveAt (0);
 		}
-		if (Time.time >= lastShot+fireRate && !isReloading)
-		{
+		if (Time.time >= lastShot + fireRate && !isReloading) {
 			lastShot = Time.time;
-			if(clipBullets>0){
+			if (clipBullets > 0) {
 				clipBullets--;
-				AudioSource.PlayClipAtPoint(gunShot,transform.position);
+				AudioSource.PlayClipAtPoint (gunShot, transform.position);
 				muzzleLastShot = Time.time;
-				bulletDecals.CreateDecal (transform, damage);
 				muzzleFlash.SetActive (true);
-				GameObject newBulletShell = (GameObject)Instantiate(spentShell, transform.position, transform.rotation);
-				newBulletShell.rigidbody.velocity = transform.TransformDirection(Vector3.left * 5);
-				shells.Add(newBulletShell);
-			}
-			else {
-				AudioSource.PlayClipAtPoint(dryFire,transform.position);
+				if(isExplosive){
+					GameObject rocketShell;
+					rocketShell = Instantiate(explosiveProjectile, transform.position, Quaternion.identity) as GameObject;
+					Debug.Log (explosiveProjectile.transform.rotation);
+					Quaternion q = Quaternion.FromToRotation(Vector3.up, transform.forward);
+					rocketShell.transform.rotation = q * rocketShell.transform.rotation; 
+					Rocket rocketscrip = rocketShell.GetComponent<Rocket>();
+					rocketscrip.LaunchProjectile(Vector3.forward, transform);
+				}
+				else {
+					bulletDecals.CreateDecal (transform, damage);
+					GameObject newBulletShell = (GameObject)Instantiate (spentShell, transform.position, transform.rotation);
+					newBulletShell.rigidbody.velocity = transform.TransformDirection (Vector3.left * 5);
+					shells.Add (newBulletShell);
+				}
+			} else {
+				AudioSource.PlayClipAtPoint (dryFire, transform.position);
 			}
 		}
 	}
