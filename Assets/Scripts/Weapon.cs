@@ -11,13 +11,11 @@ public class Weapon : MonoBehaviour {
 	private RaycastHit hit;
 	private Edelweiss.DecalSystem.Example.BulletDecals bulletDecals;
 	public float fireRate = 1;
-	private float lastShot = 0;
+	protected float lastShot = 0;
 	private float muzzleTimeSince = 0;
 	private float muzzleLastShot = 0;
 	private float muzzleShowTime = 0.05f;
 	public GameObject spentShell;
-	private int maxShellCount = 10;
-	List<GameObject> shells = new List<GameObject>();
 	public float damage = 10;
 	public AudioClip gunShot;
 	public AudioClip dryFire;
@@ -28,17 +26,13 @@ public class Weapon : MonoBehaviour {
 	public int clipSize = 6;
 	public int ammo = 100;
 	public int clipBullets;
-	private bool isReloading = false;
+	protected bool isReloading = false;
 	private float reloadStartTime = 0f;
-	public bool isExplosive = false;
-	public GameObject explosiveProjectile;
 
 
 
 	void Awake(){
-		if (!isExplosive) {
-			bulletDecals = FindObjectOfType<Edelweiss.DecalSystem.Example.BulletDecals> ();
-		}
+		bulletDecals = FindObjectOfType<Edelweiss.DecalSystem.Example.BulletDecals> ();
 		if (idle) {
 			Animation anim = gameObject.AddComponent<Animation> ();
 			anim.AddClip (idle, idle.name);
@@ -111,11 +105,7 @@ public class Weapon : MonoBehaviour {
 		}
 	}
 
-	public void Shoot() {
-		while (shells.Count >= maxShellCount) {
-			Destroy (shells [0]);
-			shells.RemoveAt (0);
-		}
+	public virtual void Shoot() {
 		if (Time.time >= lastShot + fireRate && !isReloading) {
 			lastShot = Time.time;
 			if (clipBullets > 0) {
@@ -123,21 +113,10 @@ public class Weapon : MonoBehaviour {
 				AudioSource.PlayClipAtPoint (gunShot, transform.position);
 				muzzleLastShot = Time.time;
 				muzzleFlash.SetActive (true);
-				if(isExplosive){
-					GameObject rocketShell;
-					rocketShell = Instantiate(explosiveProjectile, transform.position, Quaternion.identity) as GameObject;
-					Debug.Log (explosiveProjectile.transform.rotation);
-					Quaternion q = Quaternion.FromToRotation(Vector3.up, transform.forward);
-					rocketShell.transform.rotation = q * rocketShell.transform.rotation; 
-					Rocket rocketscrip = rocketShell.GetComponent<Rocket>();
-					rocketscrip.LaunchProjectile(Vector3.forward, transform);
-				}
-				else {
-					bulletDecals.CreateDecal (transform, damage);
-					GameObject newBulletShell = (GameObject)Instantiate (spentShell, transform.position, transform.rotation);
-					newBulletShell.rigidbody.velocity = transform.TransformDirection (Vector3.left * 5);
-					shells.Add (newBulletShell);
-				}
+				bulletDecals.CreateDecal (transform, damage);
+				GameObject newBulletShell = (GameObject)Instantiate (spentShell, transform.position, transform.rotation);
+				newBulletShell.rigidbody.velocity = transform.TransformDirection (Vector3.left * 5);
+				Destroy(newBulletShell.gameObject, 0.5f);
 			} else {
 				AudioSource.PlayClipAtPoint (dryFire, transform.position);
 			}
