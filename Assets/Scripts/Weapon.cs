@@ -28,6 +28,9 @@ public class Weapon : MonoBehaviour {
 	public int clipBullets;
 	protected bool isReloading = false;
 	private float reloadStartTime = 0f;
+	public int zoomLevel = 0;
+	private bool isZoomed = false;
+	private Transform zoomFrom;
 
 
 
@@ -55,7 +58,6 @@ public class Weapon : MonoBehaviour {
 		if (muzzleTimeSince >= muzzleShowTime) {
 			muzzleFlash.SetActive (false);
 		}
-
 
 		/*FIX THIS, THIS SHOULD BE HANDLED IN A FUNCTION THAT CONTROLS ALL ANIMATIONS FOR THIS WEAPON*/
 		if (isReloading) {
@@ -104,6 +106,11 @@ public class Weapon : MonoBehaviour {
 			hasWeapon = value; 
 		}
 	}
+	
+	public void Zoomed(bool zoomed, Transform zoomCamera){
+		isZoomed = zoomed;
+		zoomFrom = zoomCamera;
+	}
 
 	public virtual void Shoot() {
 		if (Time.time >= lastShot + fireRate && !isReloading) {
@@ -113,7 +120,12 @@ public class Weapon : MonoBehaviour {
 				AudioSource.PlayClipAtPoint (gunShot, transform.position);
 				muzzleLastShot = Time.time;
 				muzzleFlash.SetActive (true);
-				bulletDecals.CreateDecal (transform, damage);
+				if(isZoomed){
+					bulletDecals.CreateDecal (zoomFrom, damage);
+				}
+				else {
+					bulletDecals.CreateDecal (transform, damage);
+				}
 				GameObject newBulletShell = (GameObject)Instantiate (spentShell, transform.position, transform.rotation);
 				newBulletShell.rigidbody.velocity = transform.TransformDirection (Vector3.left * 5);
 				Destroy(newBulletShell.gameObject, 0.5f);

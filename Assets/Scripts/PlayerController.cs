@@ -13,10 +13,17 @@ public class PlayerController : MonoBehaviour {
 	private CharacterController controller;
 	private float lastWalk = 0;
 	private int lastWalkSound = 0;
+	private Camera[] cameras;
+	
+	private int normal = 60;
+	private float smooth = 5;
+	private bool isZoomed = false;
 
 	void Awake()
 	{
 		controller = GetComponent<CharacterController>();
+		cameras = GetComponentsInChildren<Camera>();
+
 		Weapon weapon;
 		for(int i=0; i<weaponList.Length;i++)
 		{
@@ -116,6 +123,35 @@ public class PlayerController : MonoBehaviour {
 				weapon.Shoot();
 			}
 
+		}
+
+
+		//ZOOM WEAPON
+		if (Input.GetKeyDown (KeyCode.Z)) {
+			isZoomed = true;
+		}
+		if (Input.GetKeyUp (KeyCode.Z)) {
+			isZoomed = false;
+		}
+	
+		if (isZoomed) {
+			if(activeWeapon>=0){
+				weapon = weaponList[activeWeapon];
+				int weaponZoom = normal - weapon.zoomLevel;
+				weapon.Zoomed(true, cameras[0].transform);
+				for(int i = 0; i<cameras.Length; i++){
+					cameras[i].fieldOfView = Mathf.Lerp(cameras[i].fieldOfView,weaponZoom,Time.deltaTime*smooth);
+				}
+			}
+		}
+		else {
+			if(activeWeapon>=0){
+				weapon = weaponList[activeWeapon];
+				weapon.Zoomed(false, cameras[0].transform);
+			}
+			for(int i = 0; i<cameras.Length; i++){
+				cameras[i].fieldOfView = Mathf.Lerp(cameras[i].fieldOfView,normal,Time.deltaTime*smooth);
+			}
 		}
 
 
