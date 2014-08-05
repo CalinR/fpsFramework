@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour {
 	private float smooth = 5;
 	private bool isZoomed = false;
 
+	public Texture2D crosshairImage;
+
 	void Awake()
 	{
 		controller = GetComponent<CharacterController>();
@@ -44,7 +46,15 @@ public class PlayerController : MonoBehaviour {
 
 		if (activeWeapon >= 0) {
 			GUI.Label (new Rect (Screen.width - 60f, Screen.height - 30f, 30f, 20f), weaponList [activeWeapon].clipBullets.ToString (), ammoGuiStyle);
-			GUI.Label (new Rect (Screen.width - 30f, Screen.height - 30f, 30f, 20f), weaponList [activeWeapon].ammo.ToString (), ammoGuiStyle);
+			if(weaponList[activeWeapon].ammo>0){
+				GUI.Label (new Rect (Screen.width - 30f, Screen.height - 30f, 30f, 20f), weaponList [activeWeapon].ammo.ToString (), ammoGuiStyle);
+			}
+		}
+
+		if (isZoomed) {
+				float xMin = (Screen.width / 2) - (crosshairImage.width / 2);
+				float yMin = (Screen.height / 2) - (crosshairImage.height / 2);
+				GUI.DrawTexture (new Rect (xMin, yMin, crosshairImage.width, crosshairImage.height), crosshairImage);
 		}
 	}
 	
@@ -137,7 +147,10 @@ public class PlayerController : MonoBehaviour {
 		if (isZoomed) {
 			if(activeWeapon>=0){
 				weapon = weaponList[activeWeapon];
-				int weaponZoom = normal - weapon.zoomLevel;
+				float weaponZoom = normal;
+				if(weapon.zoomLevel>0){
+					weaponZoom = normal-(normal/(100/weapon.zoomLevel));
+				}
 				weapon.Zoomed(true, cameras[0].transform);
 				for(int i = 0; i<cameras.Length; i++){
 					cameras[i].fieldOfView = Mathf.Lerp(cameras[i].fieldOfView,weaponZoom,Time.deltaTime*smooth);
@@ -217,7 +230,12 @@ public class PlayerController : MonoBehaviour {
 			weapon = weaponList[i];
 			if((weapon.id) == id)
 			{
-				weapon.ammo += collectedAmmo;
+				if(weapon.ammo>0){
+					weapon.ammo += collectedAmmo;
+				}
+				else {
+					weapon.clipBullets += collectedAmmo;
+				}
 			}
 		}
 	}

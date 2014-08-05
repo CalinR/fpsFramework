@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ProjectileWeapon : Weapon {
+public class ProjectileWeapon : BulletWeapon {
 
 	public GameObject explosiveProjectile;
 
@@ -37,8 +37,12 @@ public class ProjectileWeapon : Weapon {
 				Debug.Log (explosiveProjectile.transform.rotation);
 				Quaternion q = Quaternion.FromToRotation (Vector3.up, transform.forward);
 				rocketShell.transform.rotation = q * rocketShell.transform.rotation; 
-				Rocket rocketscrip = rocketShell.GetComponent<Rocket> ();
-				rocketscrip.LaunchProjectile (Vector3.forward, transform);
+				Rocket rocketscript = rocketShell.GetComponent<Rocket> ();
+				rocketscript.LaunchProjectile (Vector3.forward, transform);
+				AudioSource.PlayClipAtPoint (gunShot, transform.position);
+			}
+			else {
+				AudioSource.PlayClipAtPoint (dryFire, transform.position);
 			}
 		}
 	}

@@ -9,10 +9,17 @@ public class Ammo : MonoBehaviour {
 	public bool ammoEnabled = true;
 	private float ammoPickedUpTime = 0f;
 	public AudioClip regeneration;
+	public AudioClip pickup;
 
 	public void Pickup(){
 		ammoPickedUpTime = Time.time;
 		ammoEnabled = false;
+		if (ammoRefreshRate == 0) {
+			Destroy(gameObject);
+		}
+		if (pickup) {
+			AudioSource.PlayClipAtPoint(pickup, new Vector3(transform.position.x, transform.position.y-1, transform.position.z));
+		}
 	}
 
 	void Update(){
