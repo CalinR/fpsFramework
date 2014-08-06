@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour {
 			if(weaponList[activeWeapon].ammo>0){
 				GUI.Label (new Rect (Screen.width - 30f, Screen.height - 30f, 30f, 20f), weaponList [activeWeapon].ammo.ToString (), ammoGuiStyle);
 			}
+			GUI.DrawTexture (new Rect (Screen.width - (70f+weaponList[activeWeapon].weaponIcon.width), Screen.height - 40f, weaponList[activeWeapon].weaponIcon.width, weaponList[activeWeapon].weaponIcon.height), weaponList[activeWeapon].weaponIcon);
 		}
 
 		if (isZoomed) {

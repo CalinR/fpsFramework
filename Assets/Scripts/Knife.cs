@@ -12,6 +12,7 @@ public class Knife : MonoBehaviour {
 			hasStruck = true;
 			AudioSource.PlayClipAtPoint (collisionSound, transform.position);
 		}
+		rigidbody.velocity = new Vector3 (0,0,0);
 	}
 
 	void Update(){

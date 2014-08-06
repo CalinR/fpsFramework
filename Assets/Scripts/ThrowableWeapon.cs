@@ -22,6 +22,7 @@ public class ThrowableWeapon : Weapon {
 				item = Instantiate (throwableItem, transform.position + transform.forward*1, transform.rotation) as GameObject;
 				item.rigidbody.velocity = transform.TransformDirection(Vector3.forward * throwSpeed);
 				AudioSource.PlayClipAtPoint (throwing, transform.position);
+
 			}
 		}
 	}

@@ -14,6 +14,7 @@ public class Weapon : MonoBehaviour {
 	public int clipSize = 6;
 	public int ammo = 100;
 	public int clipBullets;
+	public Texture2D weaponIcon;
 
 	void Start(){
 		if (clipBullets == 0) {
