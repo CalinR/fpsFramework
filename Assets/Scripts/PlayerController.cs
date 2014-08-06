@@ -45,11 +45,11 @@ public class PlayerController : MonoBehaviour {
 		ammoGuiStyle.fontSize = 14;
 
 		if (activeWeapon >= 0) {
-			GUI.Label (new Rect (Screen.width - 60f, Screen.height - 30f, 30f, 20f), weaponList [activeWeapon].clipBullets.ToString (), ammoGuiStyle);
+			GUI.Label (new Rect (Screen.width - 100f, Screen.height - 30f, 30f, 20f), weaponList [activeWeapon].clipBullets.ToString (), ammoGuiStyle);
 			if(weaponList[activeWeapon].ammo>0){
 				GUI.Label (new Rect (Screen.width - 30f, Screen.height - 30f, 30f, 20f), weaponList [activeWeapon].ammo.ToString (), ammoGuiStyle);
 			}
-			GUI.DrawTexture (new Rect (Screen.width - (70f+weaponList[activeWeapon].weaponIcon.width), Screen.height - 40f, weaponList[activeWeapon].weaponIcon.width, weaponList[activeWeapon].weaponIcon.height), weaponList[activeWeapon].weaponIcon);
+			GUI.DrawTexture (new Rect (Screen.width - (40f+weaponList[activeWeapon].weaponIcon.width), Screen.height - 40f, weaponList[activeWeapon].weaponIcon.width, weaponList[activeWeapon].weaponIcon.height), weaponList[activeWeapon].weaponIcon);
 		}
 
 		if (isZoomed) {
