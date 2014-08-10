@@ -80,6 +80,7 @@ public class BulletWeapon : Weapon {
 			clipBullets+=bulletsMissing;
 		}
 	}
+	
 
 	public override void Shoot() {
 		if (Time.time >= lastShot + fireRate && !isReloading) {

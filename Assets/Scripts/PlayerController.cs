@@ -20,9 +20,17 @@ public class PlayerController : MonoBehaviour {
 	private bool isZoomed = false;
 
 	public Texture2D crosshairImage;
+	private GUIText ammoGui;
+	private GUIText clipGui;
+	private GUITexture graphicGui;
 
 	void Awake()
 	{
+		ammoGui = GameObject.Find("GuiAmmo").GetComponent<GUIText>();
+		clipGui = GameObject.Find("GuiClip").GetComponent<GUIText>();
+		graphicGui = GameObject.Find("GuiGraphic").GetComponent<GUITexture>();
+
+
 		controller = GetComponent<CharacterController>();
 		cameras = GetComponentsInChildren<Camera>();
 
@@ -41,16 +49,18 @@ public class PlayerController : MonoBehaviour {
 
 	void OnGUI ( )
 	{
-		GUIStyle ammoGuiStyle = new GUIStyle();
-		ammoGuiStyle.fontSize = 14;
-
+		/*
 		if (activeWeapon >= 0) {
+			ammoGuiStyle.font = font;
+			GUI.contentColor = Color.red;
+			//GUI.normal.textColor = Color.red;
+			//GUI.skin.font = font;
 			GUI.Label (new Rect (Screen.width - 100f, Screen.height - 30f, 30f, 20f), weaponList [activeWeapon].clipBullets.ToString (), ammoGuiStyle);
 			if(weaponList[activeWeapon].ammo>0){
 				GUI.Label (new Rect (Screen.width - 30f, Screen.height - 30f, 30f, 20f), weaponList [activeWeapon].ammo.ToString (), ammoGuiStyle);
 			}
 			GUI.DrawTexture (new Rect (Screen.width - (40f+weaponList[activeWeapon].weaponIcon.width), Screen.height - 40f, weaponList[activeWeapon].weaponIcon.width, weaponList[activeWeapon].weaponIcon.height), weaponList[activeWeapon].weaponIcon);
-		}
+		}*/
 
 		if (isZoomed) {
 				float xMin = (Screen.width / 2) - (crosshairImage.width / 2);
@@ -184,6 +194,33 @@ public class PlayerController : MonoBehaviour {
 		else {
 			BroadcastMessage("PlayerIdle", SendMessageOptions.DontRequireReceiver);
 		}
+
+
+
+
+
+		//WEAPON GUI
+		if (activeWeapon >= 0) {
+			weapon = weaponList[activeWeapon];
+			ammoGui.enabled = true;
+			graphicGui.enabled = true;
+			if(weaponList[activeWeapon].ammo>0){
+				clipGui.enabled = true;
+			}
+			else {
+				clipGui.enabled = false;
+			}
+
+			ammoGui.text = weaponList[activeWeapon].clipBullets.ToString();
+			clipGui.text = weaponList[activeWeapon].ammo.ToString();
+			graphicGui.texture = weaponList[activeWeapon].weaponIcon;
+		}
+		else {
+			ammoGui.enabled = false;
+			clipGui.enabled = false;
+			graphicGui.enabled = false;
+		}
+
 	}
 
 
